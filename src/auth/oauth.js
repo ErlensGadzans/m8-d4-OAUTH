@@ -12,7 +12,7 @@ passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: process.env.REDIRECT_URL,
     },
-    async function (accessToken, refreshToken, profile, next) {
+    async function (accessToken, refreshToken, profile, done) {
       console.log(profile);
       //REGISTERING NEW USER
       try {
@@ -25,17 +25,17 @@ passport.use(
             img: profile.photos.value,
             email: profile.emails[0].value,
           });
-          await newAuthor.save();
-          const tokens = await authenticate(newAuthor);
+          const savedAuthor = await newAuthor.save();
+          const tokens = await authenticate(savedAuthor);
           done(null, { newAuthor, tokens }); //NULL NOT ERROR SITUATION
         } else {
           //IF GOOGLE USER EXISTS JUST GENERATE TOKENS FOR HIM
-          const tokens = await authenticate(author);
-          done(null, { author, tokens });
+          const accessToken = await authenticate(author);
+          done(null, { author, accessToken });
         }
       } catch (error) {
         console.log(error);
-        next(error);
+        // next(error);
       }
     }
   )
@@ -43,4 +43,8 @@ passport.use(
 //GETTING AUTHOR FROM PROVIDER & CONVERTED INTO A JSON
 passport.serializeUser(function (author, done) {
   done(null, author);
+});
+
+passport.deserializeUser(function (author, done) {
+  done(author, null);
 });

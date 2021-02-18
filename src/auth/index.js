@@ -7,7 +7,7 @@ const authenticate = async (author) => {
     return accessToken;
   } catch (error) {
     console.log(error);
-    next(error);
+    // next(error);
   }
 };
 
