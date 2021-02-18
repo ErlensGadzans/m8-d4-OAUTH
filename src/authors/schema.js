@@ -6,6 +6,8 @@ const AuthorSchema = new Schema({
   img: String,
   username: String,
   password: String,
+  email: String,
+  googleId: String,
 });
 
 AuthorSchema.statics.findByCredentials = async function (username, plainPW) {
