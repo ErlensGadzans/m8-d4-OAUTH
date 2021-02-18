@@ -61,29 +61,10 @@ authorsRouter.get(
   "/googleRedirect",
   passport.authenticate("google"), //PASSPORT AUTHENTICATE
   async (req, res, next) => {
-    res.cookie("accessToken", req.user.accessToken);
+    res.cookie("accessToken", req.user.accessToken, { httpOnly: true }); //FROM FRONTEND JS IS NOT ABLE CHECK CONTENT. PROTECTING TOKENS.
+
     res.redirect(process.env.LOCAL_URL + "accessToken=" + req.user.accessToken);
   }
 );
 
-// usersRouter.get(
-//   "/googleRedirect",
-//   passport.authenticate("google"), //passport auth
-//   async (req, res, next) => {
-//     try {
-//       res.cookie("accessToken", req.user.tokens.accessToken, {
-//         //RETURNING FROM GOOGLE TOKEN. COOKIES ARE STORING TOKENS
-//         httpOnly: true, //FROM FRONTEND JS IS NOT ABLE CHECK CONTENT. PROTECTING TOKENS.
-//       });
-//       res.cookie("refreshToken", req.user.tokens.refreshToken, {
-//         httpOnly: true,
-//         path: "/users/refreshToken", //COOKIES WILL BE PERFORMED ONLY WHEN THEY ARE NEEDED
-//       });
-
-//       res.status(200).redirect(process.env.LOCAL_URL); //tell the brower go to main page. PUT IN DOT ENV FILE.
-//     } catch (error) {
-//       next(error);
-//     }
-//   }
-// );
 module.exports = authorsRouter;

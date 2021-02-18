@@ -26,8 +26,8 @@ passport.use(
             email: profile.emails[0].value,
           });
           const savedAuthor = await newAuthor.save();
-          const tokens = await authenticate(savedAuthor);
-          done(null, { newAuthor, tokens }); //NULL NOT ERROR SITUATION
+          const accessToken = await authenticate(savedAuthor);
+          done(null, { newAuthor, accessToken }); //NULL NOT ERROR SITUATION
         } else {
           //IF GOOGLE USER EXISTS JUST GENERATE TOKENS FOR HIM
           const accessToken = await authenticate(author);
