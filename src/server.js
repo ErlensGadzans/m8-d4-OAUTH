@@ -5,6 +5,7 @@ dotenv.config();
 const listEndpoints = require("express-list-endpoints");
 const mongoose = require("mongoose");
 const passport = require("passport");
+const oauth = require("./auth/oauth"); // ATTACHING GOOGLE STRATEGY TO PASSPORT
 
 const articlesRouter = require("./articles");
 const authorsRouter = require("./authors");
