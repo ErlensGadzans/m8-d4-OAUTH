@@ -4,6 +4,7 @@ const cors = require("cors");
 dotenv.config();
 const listEndpoints = require("express-list-endpoints");
 const mongoose = require("mongoose");
+const passport = require("passport");
 
 const articlesRouter = require("./articles");
 const authorsRouter = require("./authors");
@@ -14,6 +15,7 @@ const port = process.env.PORT || 3077;
 
 server.use(express.json());
 server.use(cors());
+server.use(passport.initialize()); //INITIALIZE PASSPORT
 
 server.use("/articles", articlesRouter);
 server.use("/authors", authorsRouter);

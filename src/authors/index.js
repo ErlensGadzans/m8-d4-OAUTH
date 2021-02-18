@@ -2,6 +2,7 @@ const express = require("express");
 const AuthorSchema = require("./schema");
 const { authenticate } = require("../auth");
 const { authorize } = require("../auth/middlewares");
+const passport = require("passport");
 
 const authorsRouter = express.Router();
 
@@ -49,5 +50,19 @@ authorsRouter.get("/", authorize, async (req, res, next) => {
     next(error);
   }
 });
+
+//END POINTS
+authorsRouter.get(
+  "/googleLogin",
+  passport.authenticate("google", { scope: ["profile", "email"] }) //INFO WHITCH IS REQUESTED FROM GOOGLE
+);
+
+authorsRouter.get(
+  "/googleRedirect",
+  passport.authenticate("google"), //PASSPORT AUTHENTICATE
+  async (req, res, next) => {
+    res.send("ok");
+  }
+);
 
 module.exports = authorsRouter;
