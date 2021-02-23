@@ -21,7 +21,7 @@ passport.use(
         if (!author) {
           const newAuthor = new AuthorSchema({
             googleId: profile.id,
-            name: profile.name.familyName,
+            name: profile.name.givenName,
             img: profile.photos.value,
             email: profile.emails[0].value,
           });
