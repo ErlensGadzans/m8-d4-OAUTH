@@ -62,8 +62,7 @@ authorsRouter.get(
   passport.authenticate("google"), //PASSPORT AUTHENTICATE
   async (req, res, next) => {
     res.cookie("accessToken", req.user.accessToken, { httpOnly: true }); //FROM FRONTEND JS IS NOT ABLE CHECK CONTENT. PROTECTING TOKENS.
-
-    res.redirect(process.env.LOCAL_URL + "accessToken=" + req.user.accessToken);
+    res.redirect(process.env.LOCAL_URL + "accessToken" + req.user.accessToken);
   }
 );
 
